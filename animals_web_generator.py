@@ -14,12 +14,14 @@ with open("animals_template.html", "r", encoding="utf-8") as file:
 def animal_content(animals_data):
     output = ''
     for animal_data in animals_data:
-        output += '<li class="cards__item">'
-        output += f"Name: {animal_data['name']}<br/>\n"
-        output += f"Diet: {animal_data['characteristics']['diet']}<br/>\n"
-        output += f"Location: {animal_data['locations'][0]}<br/>\n"
+        output += '<li class="cards__item">\n'
+        output += f'  <div class="card__title">{animal_data["name"]}</div>\n'
+        output += '  <p class="card__text">\n'
+        output += f'      <strong>Diet:</strong> {animal_data["characteristics"]["diet"]}<br/>\n'
+        output += f'      <strong>Location:</strong> {animal_data["locations"][0]}<br/>\n'
         if 'type' in animal_data['characteristics']:
-            output += f"Type: {animal_data['characteristics']['type']}<br/>\n"
+            output += f'      <strong>Type:</strong> {animal_data["characteristics"]["type"]}<br/>\n'
+        output += '  </p>\n'
         output += '</li>\n'
 
     return output
