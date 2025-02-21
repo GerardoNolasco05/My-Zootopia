@@ -7,15 +7,28 @@ def load_data(file_path):
 
 animals_data = load_data('animals_data.json')
 
+with open("animals_template.html", "r", encoding="utf-8") as file:
+    html_template = file.read()
+
 
 def animal_content(animals_data):
-    for animal in animals_data:
-        print(f"Name: {animal['name']}")
-        print(f"Diet: {animal['characteristics']['diet']}")
-        print(f"Location: {animal['locations'][0]}")
-        if 'type' in animal['characteristics']:
-            print(f"Type: {animal['characteristics']['type']}")
-        print()  # Adds a blank line for better readability
+    output = ''
+    for animal_data in animals_data:
+        output += '<li class="cards__item">'
+        output += f"Name: {animal_data['name']}<br/>\n"
+        output += f"Diet: {animal_data['characteristics']['diet']}<br/>\n"
+        output += f"Location: {animal_data['locations'][0]}<br/>\n"
+        if 'type' in animal_data['characteristics']:
+            output += f"Type: {animal_data['characteristics']['type']}<br/>\n"
+        output += '</li>\n'
+
+    return output
 
 
-animal_content(animals_data)
+# Replace the placeholder with the actual animal content
+animal_info_html = animal_content(animals_data)
+html_template = html_template.replace("__REPLACE_ANIMALS_INFO__", animal_info_html)
+
+# Save the modified HTML to a new file
+with open("animals.html", "w", encoding="utf-8") as output_file:
+    output_file.write(html_template)
